@@ -72,16 +72,31 @@ class Client:
 
 class Price:
     def get_charge(self, days_rented: int) -> float:
-        pass
+        raise NotImplementedError()
 
     def get_frequent_renter_points(self, days_rented: int) -> int:
-        pass
+        raise NotImplementedError()
 
 class RegularPrice(Price):
-    pass
+    def get_charge(self, days_rented: int) -> float:
+        return 2 + (days_rented - 2) * 1.5 if days_rented > 2 else 2
+    
+    def get_frequent_renter_points(self, days_rented: int) -> int:
+        return 1 
 
 class NewReleasePrice(Price):
-    pass
+    def get_charge(self, days_rented: int) -> float:
+        return days_rented * 3
+    
+    def get_frequent_renter_points(self, days_rented: int) -> int:
+        points = 1
+        if days_rented > 1:
+            points += 1
+        return points
 
 class ChildrenPrice(Price):
-    pass
+    def get_charge(self, days_rented: int) -> float:
+        return 1.5 + (days_rented - 3) * 1.5 if days_rented > 3 else 1.5
+
+    def get_frequent_renter_points(self, days_rented: int) -> int:
+        return 1
